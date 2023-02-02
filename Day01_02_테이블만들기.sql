@@ -25,7 +25,7 @@
 */
 
 /*
-    제약조건(Constraint)
+    제약조건(Constraint) 5개 중 3개
     1. 널
         1) NULL 또는 생략
         2) NOT NULL
@@ -40,20 +40,8 @@ DROP TABLE PRODUCT;
 CREATE TABLE PRODUCT(
     CODE         VARCHAR2(2 BYTE)  NOT NULL UNIQUE, 
     MODEL        VARCHAR2(10 BYTE) NULL, 
-    CATEGORY     VARCHAR2(5 BYTE),
+    CATEGORY     VARCHAR2(5 BYTE)  CHECK(CATEGORY = 'MAIN' OR CATEGORY = 'SUB'),  -- CHECK(CATEGORY IN('MAIN', 'SUB'))
     PRICE        NUMBER            CHECK(PRICE >= 0),
-    AMOUNT       NUMBER(2)         CHECK(AMOUNT >= 0 AND AMOUNT <= 100),
+    AMOUNT       NUMBER(2)         CHECK(AMOUNT >= 0 AND AMOUNT <= 100),          -- CHECK(AMOUNT BETWEEN 0 AND 100)
     MANUFACTURED DATE
 );
-
-
-
-
-
-
-
-
-
-
-
-
