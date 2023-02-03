@@ -50,6 +50,6 @@ CREATE TABLE ORDER_TBL (
         3) DBA_CONSTRAINTS
 */
 
--- 테이블의 구조를 확인하는 쿼리문 (설명)
+-- 테이블의 구조를 확인하는 쿼리문 (설명 : DESCRIBE)
 -- DESCRIBE ALL_CONSTRAINTS;
 -- SELECT * FROM ALL_CONSTRAINTS WHERE CONSTRAINT_NAME LIKE 'PK%';
