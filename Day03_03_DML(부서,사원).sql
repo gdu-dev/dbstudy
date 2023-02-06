@@ -87,3 +87,26 @@ INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '김민서', 1, '사원', 
 INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '이은영', 2, '부장', 'F', '90/09/01', 5500000);
 INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '한성일', 2, '과장', 'M', '93/04/01', 5000000);
 COMMIT;
+
+-- 데이터 수정하기
+-- 1. 부서번호(DEPT_NO)가 1인 부서의 지역(LOCATION)을 '경기'로 수정하시오.
+UPDATE DEPARTMENT_TBL
+   SET LOCATION = '경기'  -- 수정할 내용(여기서 등호는 대입 연산자이다.)
+ WHERE DEPT_NO = 1;       -- 조건문(여기서 등호는 비교 연산자이다.)
+COMMIT;
+
+-- 2. 부서번호(DEPART)가 1인 부서에 근무하는 사원들의 급여(SALARY)를 500000원 증가시키시오.
+UPDATE EMPLOYEE_TBL
+   SET SALARY = SALARY + 500000
+ WHERE DEPART = 1;
+COMMIT;
+
+
+-- 데이터 삭제하기
+-- 1. 지역(LOCATION)이 '대구'인 부서를 삭제하시오. ('대구'에서 근무하는 사원이 없으므로 문제 없이 삭제된다.)
+DELETE FROM DEPARTMENT_TBL WHERE LOCATION = '대구';
+COMMIT;
+
+-- 2. 지역(LOCATION)이 '서울'인 부서를 삭제하시오. ('서울'에서 근무하는 사원의 부서번호(DEPART)가 ON DELETE SET NULL 외래키 옵션에 의해서 NULL로 처리된다.)
+DELETE FROM DEPARTMENT_TBL WHERE LOCATION = '서울';
+COMMIT;
