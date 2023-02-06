@@ -48,12 +48,42 @@ ALTER TABLE EMPLOYEE_TBL
 
 
 
+-- 시퀀스(번호 생성기) 삭제하기
+DROP SEQUENCE DEPARTMENT_SEQ;
+
+-- 시퀀스(번호 생성기) 만들기
+CREATE SEQUENCE DEPARTMENT_SEQ
+    INCREMENT BY 1  -- 1씩 증가하는 번호를 만든다.(생략 가능)
+    START WITH 1    -- 1부터 번호를 만든다.(생략 가능)
+    NOMAXVALUE      -- 번호의 상한선이 없다.(생략 가능)  MAXVALUE 100 : 번호를 100까지만 생성한다.
+    NOMINVALUE      -- 번호의 하한선이 없다.(생략 가능)  MINVALUE 100 : 번호의 최소값이 100이다.
+    NOCYCLE         -- 번호 순환이 없다.(생략 가능)      CYCLE : 번호가 MAXVALUE에 도달하면 다음 번호는 MINVALUE이다.
+    NOCACHE         -- 메모리 캐시를 사용하지 않는다.    CACHE : 메모리 캐시를 사용한다.(사용하지 않는 것이 좋다.)
+    ORDER           -- 번호 건너뛰기가 없다.             NOORDER : 번호 건너뛰기가 가능하다.
+;
+
+-- 시퀀스에서 번호 뽑는 함수 : NEXTVAL
+-- SELECT DEPARTMENT_SEQ.NEXTVAL FROM DUAL;  -- 오라클에서는 테이블에 없는 데이터를 조회하려면 DUAL 테이블을 사용한다.
+
+-- 데이터 입력하기(Parent Key를 먼저 입력해야 한다.)
+INSERT INTO DEPARTMENT_TBL(DEPT_NO, DEPT_NAME, LOCATION) VALUES(DEPARTMENT_SEQ.NEXTVAL, '영업부', '대구');
+INSERT INTO DEPARTMENT_TBL(DEPT_NO, DEPT_NAME, LOCATION) VALUES(DEPARTMENT_SEQ.NEXTVAL, '인사부', '서울');
+INSERT INTO DEPARTMENT_TBL(DEPT_NO, DEPT_NAME, LOCATION) VALUES(DEPARTMENT_SEQ.NEXTVAL, '총무부', '대구');
+INSERT INTO DEPARTMENT_TBL(DEPT_NO, DEPT_NAME, LOCATION) VALUES(DEPARTMENT_SEQ.NEXTVAL, '기획부', '서울');
+COMMIT;
 
 
+-- 시퀀스 삭제하기
+DROP SEQUENCE EMPLOYEE_SEQ;
 
+-- 시퀀스 만들기
+CREATE SEQUENCE EMPLOYEE_SEQ
+    START WITH 1001
+    NOCACHE;
 
-
-
-
-
-
+-- 데이터 입력하기
+INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '구창민', 1, '과장', 'M', '95-05-01', 5000000);
+INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '김민서', 1, '사원', 'M', '17-09-01', 2500000);
+INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '이은영', 2, '부장', 'F', '90/09/01', 5500000);
+INSERT INTO EMPLOYEE_TBL VALUES(EMPLOYEE_SEQ.NEXTVAL, '한성일', 2, '과장', 'M', '93/04/01', 5000000);
+COMMIT;
