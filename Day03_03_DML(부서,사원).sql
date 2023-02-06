@@ -1,0 +1,59 @@
+/*
+    DML
+    1. Data Manipulation Language
+    2. 데이터 조작어
+    3. 데이터(행, Row)를 삽입, 수정, 삭제할 때 사용하는 언어이다.
+    4. DML 사용 후에는 COMMIT 또는 ROLLBACK 처리를 해야 한다.
+    5. 종류
+        1) 삽입 : INSERT INTO VALUES
+        2) 수정 : UPDATE SET WHERE
+        3) 삭제 : DELETE FROM WHERE
+*/
+
+-- 참고. 자격증에서는 DML을 INSERT,UPDATE,DELETE + SELECT로 보는 경우도 있다.
+
+-- 테이블 삭제
+DROP TABLE EMPLOYEE_TBL;
+DROP TABLE DEPARTMENT_TBL;
+
+-- DEPARTMENT_TBL 테이블 생성
+CREATE TABLE DEPARTMENT_TBL (
+    DEPT_NO   NUMBER            NOT NULL,
+    DEPT_NAME VARCHAR2(15 BYTE) NOT NULL,
+    LOCATION  VARCHAR2(15 BYTE) NOT NULL
+);
+
+-- EMPLOYEE_TBL 테이블 생성
+CREATE TABLE EMPLOYEE_TBL (
+    EMP_NO    NUMBER            NOT NULL,
+    NAME      VARCHAR2(20 BYTE) NOT NULL,
+    DEPART    NUMBER            NULL,
+    POSITION  VARCHAR2(20 BYTE) NULL,
+    GENDER    CHAR(2 BYTE)      NULL,
+    HIRE_DATE DATE              NULL, 
+    SALARY    NUMBER            NULL
+);
+
+-- 기본키
+ALTER TABLE DEPARTMENT_TBL
+    ADD CONSTRAINT PK_DEPT PRIMARY KEY(DEPT_NO);
+ALTER TABLE EMPLOYEE_TBL
+    ADD CONSTRAINT PK_EMP PRIMARY KEY(EMP_NO);
+
+-- 외래키
+ALTER TABLE EMPLOYEE_TBL
+    ADD CONSTRAINT FK_EMP_DEPT FOREIGN KEY(DEPART) 
+        REFERENCES DEPARTMENT_TBL(DEPT_NO)
+            ON DELETE SET NULL;
+
+
+
+
+
+
+
+
+
+
+
+
