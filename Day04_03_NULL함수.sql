@@ -19,11 +19,16 @@ SELECT NAME, KOR + ENG + MAT AS TOTAL
   FROM SAMPLE_TBL;
 
 
--- 1. NVL
+-- 1. NVL(칼럼, NULL대신 사용할 값)
+SELECT
+       NVL(NAME, '아무개') AS 이름
+     , NVL(KOR, 0) + NVL(ENG, 0) + NVL(MAT, 0) AS 총점
+  FROM
+       SAMPLE_TBL;
 
 
-
-
-
-
-
+-- 2. NVL2(칼럼, NULL이 아닐 때 사용할 값, NULL일 때 사용할 값)
+SELECT
+       NVL2(KOR + ENG + MAT, '응시', '결시')
+  FROM
+       SAMPLE_TBL;
