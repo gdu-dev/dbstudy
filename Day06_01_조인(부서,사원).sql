@@ -47,18 +47,27 @@ INSERT INTO EMPLOYEE_TBL(EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALA
 VALUES(EMPLOYEE_SEQ.NEXTVAL, '김성실', 5, '대리', 'F', '98/12/01', 3500000);
 COMMIT;
 
+
+-- 3. 오른쪽 외부 조인(오른쪽에 있는 테이블은 일치하는 정보가 없어도 무조건 조인한다.)
+
+-- 1) 표준 문법
+SELECT D.DEPT_NO, D.DEPT_NAME, E.EMP_NO, E.NAME
+  FROM DEPARTMENT_TBL D RIGHT OUTER JOIN EMPLOYEE_TBL E
+    ON D.DEPT_NO = E.DEPART;
+
+-- 2) 오라클 문법
+SELECT D.DEPT_NO, D.DEPT_NAME, E.EMP_NO, E.NAME
+  FROM DEPARTMENT_TBL D, EMPLOYEE_TBL E
+ WHERE D.DEPT_NO(+) = E.DEPART;
+
+
+-- 외래키 제약조건을 위반하는 데이터 삭제하기
+DELETE FROM EMPLOYEE_TBL WHERE EMP_NO = 1005;    -- PK를 조건으로 사용하면 인덱스를 타기 때문에 빠르다.
+DELETE FROM EMPLOYEE_TBL WHERE NAME = '김성실';  -- 인덱스를 타지 않는 일반 칼럼은 느리게 동작한다.
+COMMIT;
+
+
 -- 외래키 제약조건의 활성화(다시 시작)
 -- 제약조건이름 : FK_EMP_DEPT
 ALTER TABLE EMPLOYEE_TBL
     ENABLE CONSTRAINT FK_EMP_DEPT;
-
-
-
-
-
-
-
-
-
-
-
