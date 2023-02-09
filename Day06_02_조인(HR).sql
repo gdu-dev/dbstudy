@@ -24,12 +24,23 @@ SELECT
        E.MANAGER_ID = M.EMPLOYEE_ID
  ORDER BY
        E.EMPLOYEE_ID;
+
+
+-- 셀프 조인 연습.
+
+-- 각 사원 중에서 매니저보다 먼저 입사한 사원을 조회하시오.
        
-       
-       
-       
-       
-       
+SELECT
+       E.EMPLOYEE_ID, E.FIRST_NAME, E.HIRE_DATE AS 입사일자
+     , M.EMPLOYEE_ID, M.FIRST_NAME, M.HIRE_DATE AS 매니저입사일자
+  FROM
+       EMPLOYEES E INNER JOIN EMPLOYEES M
+    ON
+       E.MANAGER_ID = M.EMPLOYEE_ID
+ WHERE
+       TO_DATE(E.HIRE_DATE, 'YY/MM/DD') < TO_DATE(M.HIRE_DATE, 'YY/MM/DD')
+ ORDER BY
+       E.EMPLOYEE_ID;
        
        
        
