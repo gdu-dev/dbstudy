@@ -43,9 +43,31 @@ SELECT
        E.EMPLOYEE_ID;
        
        
+-- PK, FK가 아닌 일반 칼럼을 이용한 셀프 조인
+
+-- 동일한 부서에서 근무하는 사원들을 조인하기 위해서 DEPARTMENT_ID로 조인 조건을 생성
+
+-- 사원(나)        사원(남)
+-- EMPLOYEES ME    EMPLOYEES YOU
        
-       
-       
+-- 문제. 같은 부서에 근무하는 사원 중에서 나보다 SALARY가 높은 사원 정보를 조회하시오.
+SELECT
+       ME.EMPLOYEE_ID, ME.FIRST_NAME, ME.SALARY AS 내급여
+     , YOU.FIRST_NAME, YOU.SALARY AS 너급여
+     , ME.DEPARTMENT_ID, YOU.DEPARTMENT_ID
+  FROM
+       EMPLOYEES ME INNER JOIN EMPLOYEES YOU
+    ON
+       ME.DEPARTMENT_ID = YOU.DEPARTMENT_ID
+ WHERE
+       ME.SALARY < YOU.SALARY
+ ORDER BY
+       ME.EMPLOYEE_ID;
+
+
+
+
+
        
        
        
