@@ -37,6 +37,26 @@ SELECT D.DEPT_NO, D.DEPT_NAME, E.EMP_NO, E.NAME
 
 
 
+-- 외래키 제약조건의 비활성화(일시 중지)
+-- 제약조건이름 : FK_EMP_DEPT
+ALTER TABLE EMPLOYEE_TBL
+    DISABLE CONSTRAINT FK_EMP_DEPT;
+
+-- 외래키 제약조건이 없는 상태이므로, 제약조건을 위배하는 데이터를 입력할 수 있다.
+INSERT INTO EMPLOYEE_TBL(EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY)
+VALUES(EMPLOYEE_SEQ.NEXTVAL, '김성실', 5, '대리', 'F', '98/12/01', 3500000);
+COMMIT;
+
+-- 외래키 제약조건의 활성화(다시 시작)
+-- 제약조건이름 : FK_EMP_DEPT
+ALTER TABLE EMPLOYEE_TBL
+    ENABLE CONSTRAINT FK_EMP_DEPT;
+
+
+
+
+
+
 
 
 
