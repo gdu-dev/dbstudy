@@ -41,15 +41,15 @@ SELECT
        TO_DATE(E.HIRE_DATE, 'YY/MM/DD') < TO_DATE(M.HIRE_DATE, 'YY/MM/DD')
  ORDER BY
        E.EMPLOYEE_ID;
-       
-       
+
+
 -- PK, FK가 아닌 일반 칼럼을 이용한 셀프 조인
 
 -- 동일한 부서에서 근무하는 사원들을 조인하기 위해서 DEPARTMENT_ID로 조인 조건을 생성
 
 -- 사원(나)        사원(남)
 -- EMPLOYEES ME    EMPLOYEES YOU
-       
+
 -- 문제. 같은 부서에 근무하는 사원 중에서 나보다 SALARY가 높은 사원 정보를 조회하시오.
 SELECT
        ME.EMPLOYEE_ID, ME.FIRST_NAME, ME.SALARY AS 내급여
@@ -63,6 +63,32 @@ SELECT
        ME.SALARY < YOU.SALARY
  ORDER BY
        ME.EMPLOYEE_ID;
+
+
+-- 조인 연습.
+
+-- 1. LOCATION_ID가 1700인 부서에 근무하는 사원들의 EMPLOYEE_ID, FIRST_NAME, DEPARTMENT_NAME을 조회하시오.
+-- 1) 표준 문법
+
+-- 2) 오라클 문법
+
+
+
+-- 2. DEPARTMENT_NAME이 'Executive'인 부서에 근무하는 사원들의 EMPLOYEE_ID, FIRST_NAME을 조회하시오.
+-- 1) 표준 문법
+
+-- 2) 오라클 문법
+
+
+-- 
+
+
+
+
+
+
+
+
 
 
 
