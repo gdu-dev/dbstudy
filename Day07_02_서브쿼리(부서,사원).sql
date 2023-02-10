@@ -225,8 +225,19 @@ SELECT E.EMP_NO, E.NAME
           FROM EMPLOYEE_TBL) E
  WHERE E.RN = 2;
 
+
 /* FROM절의 서브쿼리 */
 
+-- 1. 연봉이 2번째로 높은 사원을 조회하시오.
+--    1) 연봉순으로 정렬한다.
+--    2) 정렬 결과에 행 번호(ROWNUM)을 붙인다.
+--    3) 원하는 행 번호를 조회한다.
+SELECT E.EMP_NO, E.NAME, E.DEPART, E.GENDER, E.POSITION, E.HIRE_DATE, E.SALARY
+  FROM (SELECT ROWNUM AS RN, A.EMP_NO, A.NAME, A.DEPART, A.GENDER, A.POSITION, A.HIRE_DATE, A.SALARY
+          FROM (SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+                  FROM EMPLOYEE_TBL
+                 ORDER BY SALARY DESC) A) E
+ WHERE E.RN = 3;
 
 
 
