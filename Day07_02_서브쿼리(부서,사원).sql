@@ -41,6 +41,7 @@ SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
                      FROM EMPLOYEE_TBL
                     WHERE EMP_NO = 1001);
 
+
 -- 2. 부서번호가 2인 부서와 동일한 지역에 있는 부서를 조회하시오.
 SELECT 부서정보
   FROM 부서
@@ -63,6 +64,7 @@ SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
  WHERE SALARY = (SELECT MAX(SALARY)
                    FROM EMPLOYEE_TBL);
 
+
 -- 4. 평균 급여 이상을 받는 사원을 조회하시오.
 SELECT 사원정보
   FROM 사원
@@ -70,8 +72,52 @@ SELECT 사원정보
 
 SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
   FROM EMPLOYEE_TBL
- WHERE SALARY > (SELECT AVG(SALARY)
-                   FROM EMPLOYEE_TBL);
+ WHERE SALARY >= (SELECT AVG(SALARY)
+                    FROM EMPLOYEE_TBL);
+
+
+-- 5. 평균 근속 개월 수 이상을 근무한 사원을 조회하시오.
+SELECT 사원정보
+  FROM 사원
+ WHERE 근속개월수 >= (평균 근속개월수);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE MONTHS_BETWEEN(SYSDATE, HIRE_DATE) >= (SELECT AVG(MONTHS_BETWEEN(SYSDATE, HIRE_DATE))
+                                                FROM EMPLOYEE_TBL);
+
+
+-- 6. 부서번호가 2인 부서에 근무하는 사원들의 직급과 일치하는 사원을 조회하시오.
+SELECT 사원정보
+  FROM 사원
+ WHERE 직급 IN (부서번호가 2인 부서에 근무하는 사원들의 직급);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE POSITION IN (SELECT POSITION
+                      FROM EMPLOYEE_TBL
+                     WHERE DEPART = 2);  -- 서브쿼리의 WHERE절에서 사용한 칼럼이 PK나 UNIQUE 칼럼이 아니므로 다중 행 서브쿼리이다.
+                                         -- 따라서 단일 행 연산자인 등호(=) 대신 다중 행 연산자 IN을 사용해야 한다.
+
+
+-- 7. 부서명이 '영업부'인 부서에 근무하는 사원을 조회하시오.
+SELECT 사원정보
+FROM 사원
+WHERE 부서번호 IN (부서명이 '영업부'인 부서의 부서번호);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE DEPART IN (SELECT DEPT_NO
+                    FROM DEPARTMENT_TBL
+                   WHERE DEPT_NAME = '영업부');  -- WHERE절에서 사용한 DEPART_NAME 칼럼은 PK/UNIQUE가 아니므로 다중 행 서브쿼리이다.
+
+-- 참고. 조인으로 풀기
+SELECT E.EMP_NO, E.NAME, E.DEPART, E.GENDER, E.POSITION, E.HIRE_DATE, E.SALARY
+  FROM DEPARTMENT_TBL D INNER JOIN EMPLOYEE_TBL E
+    ON D.DEPT_NO = E.DEPART
+ WHERE D.DEPT_NAME = '영업부';
+
+
 
 
 /* SELECT절의 서브쿼리 */
