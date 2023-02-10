@@ -32,8 +32,8 @@
 
 -- 1. 사원번호가 1001인 사원과 동일한 직급(POSITION)을 가진 사원을 조회하시오.
 SELECT 사원정보
-  FROM 사원테이블
- WHERE 직급 = (사원번호가 1001인 사원의 직급)
+  FROM 사원
+ WHERE 직급 = (사원번호가 1001인 사원의 직급);
 
 SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
   FROM EMPLOYEE_TBL
@@ -44,7 +44,7 @@ SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
 -- 2. 부서번호가 2인 부서와 동일한 지역에 있는 부서를 조회하시오.
 SELECT 부서정보
   FROM 부서
- WHERE 지역 = (부서번호가 2인 부서의 지역)
+ WHERE 지역 = (부서번호가 2인 부서의 지역);
 
 SELECT DEPT_NO, DEPT_NAME, LOCATION
   FROM DEPARTMENT_TBL
@@ -53,6 +53,25 @@ SELECT DEPT_NO, DEPT_NAME, LOCATION
                     WHERE DEPT_NO = 2);
 
 
+-- 3. 가장 높은 급여를 받는 사원을 조회하시오.
+SELECT 사원정보
+  FROM 사원
+ WHERE 급여 = (가장 높은 급여);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE SALARY = (SELECT MAX(SALARY)
+                   FROM EMPLOYEE_TBL);
+
+-- 4. 평균 급여 이상을 받는 사원을 조회하시오.
+SELECT 사원정보
+  FROM 사원
+ WHERE 급여 >= (평균 급여);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE SALARY > (SELECT AVG(SALARY)
+                   FROM EMPLOYEE_TBL);
 
 
 /* SELECT절의 서브쿼리 */
