@@ -136,6 +136,27 @@ SELECT D.DEPT_NO, D.DEPT_NAME, D.LOCATION
  WHERE E.POSITION = '과장';
 
 
+-- 9. '영업부'의 가장 높은 급여보다 더 높은 급여를 받는 사원을 조회하시오.
+SELECT 사원정보
+FROM 사원
+WHERE 급여 > ('영업부'의 최대 급여);
+
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE SALARY > (SELECT MAX(SALARY)
+                   FROM EMPLOYEE_TBL
+                  WHERE DEPART IN (SELECT DEPT_NO
+                                     FROM DEPARTMENT_TBL
+                                    WHERE DEPT_NAME = '영업부'));
+
+-- 참고. 서브쿼리를 조인으로 풀기
+SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
+  FROM EMPLOYEE_TBL
+ WHERE SALARY > (SELECT MAX(E.SALARY)
+                   FROM DEPARTMENT_TBL D INNER JOIN EMPLOYEE_TBL E
+                     ON D.DEPT_NO = E.DEPART
+                  WHERE D.DEPT_NAME = '영업부');
+
 
 /* SELECT절의 서브쿼리 */
 
