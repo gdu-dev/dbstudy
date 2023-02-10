@@ -28,6 +28,7 @@
             다중 행 연산자를 사용(IN, ANY, ALL 등)
 */
 
+
 /* WHERE절의 서브쿼리 */
 
 -- 1. 사원번호가 1001인 사원과 동일한 직급(POSITION)을 가진 사원을 조회하시오.
@@ -163,6 +164,66 @@ SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
 
 
 
+
+
+/*
+    인라인 뷰(Inline View)
+    1. 쿼리문에 포함된 뷰(가상 테이블)이다.
+    2. FROM절에 포함되는 서브쿼리를 의미한다.
+    3. 단일 행/다중 행 개념이 필요 없다.
+    4. 인라인 뷰에 포함된 칼럼만 메인쿼리에서 사용할 수 있다.
+    5. 인라인 뷰를 이용해서 SELECT문의 실행 순서를 조정할 수 있다.
+*/
+
+/*
+    가상 칼럼
+    1. PSEUDO COLUMN (P는 묵음)
+    2. 존재하지만 저장되어 있지 않은 칼럼을 의미한다.
+    3. 사용할 수 있지만 일부 사용에 제약이 있다.
+    4. 종류
+        1) ROWID  : 행(ROW) 아이디, 어떤 행이 어디에 저장되어 있는지 알고 있는 칼럼(물리적 저장 위치)
+        2) ROWNUM : 행(ROW) 번호, 어떤 행의 순번
+*/
+
+-- ROWID
+SELECT ROWID, EMP_NO, NAME
+  FROM EMPLOYEE_TBL;
+
+-- 오라클의 가장 빠른 검색은 ROWID를 이용한 검색이다.
+-- 실무에선 ROWID 사용이 불가능하기 때문에 대신 인덱스(INDEX)를 활용한다.
+SELECT EMP_NO, NAME
+  FROM EMPLOYEE_TBL
+ WHERE ROWID = 'AAAE9yAABAAALG5AAA';
+
+/*
+    ROWNUM의 제약 사항
+    1. ROWNUM이 1을 포함하는 범위를 조건으로 사용할 수 있다.
+    2. ROWNUM이 1을 포함하지 않는 범위는 조건으로 사용할 수 없다.
+    3. 모든 ROWNUM을 사용하려면 ROWNUM에 별명을 지정하고 그 별명을 사용하면 된다.
+*/
+
+SELECT EMP_NO, NAME
+  FROM EMPLOYEE_TBL
+ WHERE ROWNUM = 1;  -- ROWNUM이 1을 포함한 범위가 사용되므로 가능!
+
+SELECT EMP_NO, NAME
+  FROM EMPLOYEE_TBL
+ WHERE ROWNUM <= 2;  -- ROWNUM이 1을 포함한 범위가 사용되므로 가능!
+ 
+SELECT EMP_NO, NAME
+  FROM EMPLOYEE_TBL
+ WHERE ROWNUM = 2;  -- ROWNUM이 1을 포함한 범위가 아니므로 불가능!
+
+SELECT ROWNUM AS RN, EMP_NO, NAME
+  FROM EMPLOYEE_TBL
+ WHERE RN = 2;  -- 실행 순서가 맞지 않기 때문에 실행이 불가능하다.(별명을 사용할 수 없다.)
+                -- 별명 지정을 WHERE절보다 먼저 처리하면 해결된다.
+                -- 별명을 지정하는 인라인 뷰를 사용하면 가장 먼저 별명이 지정되므로 해결된다.
+
+SELECT E.EMP_NO, E.NAME
+  FROM (SELECT ROWNUM AS RN, EMP_NO, NAME
+          FROM EMPLOYEE_TBL) E
+ WHERE E.RN = 2;
 
 /* FROM절의 서브쿼리 */
 
