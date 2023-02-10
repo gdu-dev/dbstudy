@@ -159,13 +159,6 @@ SELECT EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
                   WHERE D.DEPT_NAME = '영업부');
 
 
-/* SELECT절의 서브쿼리 */
-
-
-
-
-
-
 /*
     인라인 뷰(Inline View)
     1. 쿼리문에 포함된 뷰(가상 테이블)이다.
@@ -266,3 +259,10 @@ SELECT E.EMP_NO, E.NAME, E.DEPART, E.GENDER, E.POSITION, E.HIRE_DATE, E.SALARY
   FROM (SELECT ROW_NUMBER() OVER(ORDER BY HIRE_DATE ASC) AS RN, EMP_NO, NAME, DEPART, GENDER, POSITION, HIRE_DATE, SALARY
           FROM EMPLOYEE_TBL) E
  WHERE E.RN = 3 OR E.RN = 4;
+
+
+/* SELECT절의 서브쿼리 */
+
+
+
+
