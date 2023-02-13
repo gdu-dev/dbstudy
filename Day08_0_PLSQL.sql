@@ -119,13 +119,43 @@ BEGIN
 END;
 
 
+/*
+    IF 구문
+    
+    IF 조건식 THEN
+        실행문
+    ELSIF 조건식 THEN
+        실행문
+    ELSE
+        실행문
+    END IF;
+*/
+
+-- 성적에 따른 학점(A,B,C,D,F) 출력하기
+DECLARE
+    SCORE NUMBER(3);
+    GRADE CHAR(1 BYTE);
+BEGIN
+    SCORE := 50;
+    IF SCORE >= 90 THEN
+        GRADE := 'A';
+    ELSIF SCORE >= 80 THEN
+        GRADE := 'B';
+    ELSIF SCORE >= 70 THEN
+        GRADE := 'C';
+    ELSIF SCORE >= 60 THEN
+        GRADE := 'D';
+    ELSE
+        GRADE := 'F';
+    END IF;
+    DBMS_OUTPUT.PUT_LINE(SCORE || '점은 ' || GRADE || '학점입니다.');
+END;
 
 
+-- EMPLOYEE_ID가 150인 사원의 SALARY가 15000 이상이면 '고액연봉', 아니면 '보통연봉'을 출력하시오.
 
 
-
-
-
+-- EMPLOYEE_ID가 150인 사원의 COMMISSION_PCT가 0이면 '커미션없음', 아니면 실제 커미션(COMMISSION_PCT * SALARY)을 출력하시오.
 
 
 
