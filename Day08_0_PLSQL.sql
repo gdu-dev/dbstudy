@@ -400,10 +400,51 @@ BEGIN
 END;
 
 
+/*
+    EXIT : 반복문 종료하기
+    CONTINUE : LOOP문의 시작부터 다시 실행하기
+*/
 
+-- 1부터 정수 값을 누적하시오. 누적 값이 100을 초과하면 그만 누적하고 어디까지 누적했는지 출력하시오.
+DECLARE
+    N NUMBER;
+    TOTAL NUMBER;
+BEGIN
+    N := 1;
+    TOTAL := 0;
+    WHILE TRUE LOOP
+        IF TOTAL > 100 THEN
+            EXIT;
+        END IF;
+        TOTAL := TOTAL + N;
+        N := N + 1;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('1부터 ' || N || '까지 합은 ' || TOTAL || '입니다.');
+END;
 
-
-
+-- 1부터 3의 배수를 제외한 정수 값을 누적하시오. 누적 값이 100을 초과하면 그만 누적하고 어디까지 누적했는지 출력하시오.
+DECLARE
+    N NUMBER;
+    TOTAL NUMBER;
+    MODULAR NUMBER(1);
+BEGIN
+    N := 0;
+    TOTAL := 0;
+    WHILE TRUE LOOP
+        N := N + 1;
+        IF TOTAL > 100 THEN
+            EXIT;
+        END IF;
+        SELECT MOD(N, 3)
+          INTO MODULAR
+          FROM DUAL;
+        IF MODULAR = 0 THEN
+            CONTINUE;
+        END IF;
+        TOTAL := TOTAL + N;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE(TOTAL || '입니다.');
+END;
 
 
 
