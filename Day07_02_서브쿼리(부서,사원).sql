@@ -262,6 +262,51 @@ SELECT E.EMP_NO, E.NAME, E.DEPART, E.GENDER, E.POSITION, E.HIRE_DATE, E.SALARY
 
 
 /* SELECT절의 서브쿼리 */
+/*
+    스칼라 서브쿼리
+    1. SELECT절에서 하나의 값을 반환하는 서브쿼리이다.
+    2. 일치하지 않는 정보는 NULL값을 반환한다.
+    3. 유사한 방식의 조인 방식은 외부조인이다.
+*/
+
+-- 부서번호가 1인 부서에 근무하는 사원번호, 사원명, 부서번호, 부서명을 조회하시오.
+SELECT
+       E.EMP_NO
+     , E.NAME
+     , E.DEPART
+     , (SELECT D.DEPT_NAME
+          FROM DEPARTMENT_TBL D
+         WHERE D.DEPT_NO = E.DEPART
+           AND D.DEPT_NO = 1)
+  FROM
+       EMPLOYEE_TBL E;
+
+
+-- 참고. 조인으로 풀어보기
+SELECT E.EMP_NO, E.NAME, E.DEPART, D.DEPT_NAME
+  FROM DEPARTMENT_TBL D RIGHT OUTER JOIN EMPLOYEE_TBL E
+    ON D.DEPT_NO = E.DEPART
+ WHERE DEPT_NO = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
