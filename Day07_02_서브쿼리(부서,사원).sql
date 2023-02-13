@@ -285,29 +285,4 @@ SELECT
 -- 참고. 조인으로 풀어보기
 SELECT E.EMP_NO, E.NAME, E.DEPART, D.DEPT_NAME
   FROM DEPARTMENT_TBL D RIGHT OUTER JOIN EMPLOYEE_TBL E
-    ON D.DEPT_NO = E.DEPART;
- WHERE DEPT_NO = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    ON D.DEPT_NO = E.DEPART AND DEPT_NO = 1;
