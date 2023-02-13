@@ -83,6 +83,55 @@ BEGIN
 END;
 
 
+-- 3. 레코드 변수
+--    여러 칼럼의 값을 동시에 저장하는 변수
+--    레코드 변수 정의(만들기)와 레코드 변수 선언으로 구분해서 진행
+DECLARE
+    -- 레코드 변수 정의하기
+    TYPE MY_RECORD_TYPE IS RECORD(  -- 타입명 : MY_RECORD_TYPE
+        FNAME EMPLOYEES.FIRST_NAME%TYPE,
+        LNAME EMPLOYEES.LAST_NAME%TYPE,
+        SAL EMPLOYEES.SALARY%TYPE
+    );
+    -- 레코드 변수 선언하기
+    EMP MY_RECORD_TYPE;
+BEGIN
+    SELECT FIRST_NAME, LAST_NAME, SALARY
+      INTO EMP
+      FROM EMPLOYEES
+     WHERE EMPLOYEE_ID = 100;
+    DBMS_OUTPUT.PUT_LINE(EMP.FNAME || ',' || EMP.LNAME || ',' || EMP.SAL);
+END;
+
+
+--  4. 행 변수
+--     행 전체 데이터를 저장할 수 있는 타입
+--     항상 행 전체 데이터를 저장해야 한다.
+--     선언 방법 : 변수명 테이블명%ROWTYPE
+DECLARE
+    EMP EMPLOYEES%ROWTYPE;
+BEGIN
+    SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID
+      INTO EMP
+      FROM EMPLOYEES
+     WHERE EMPLOYEE_ID = 100;
+    DBMS_OUTPUT.PUT_LINE(EMP.FIRST_NAME || ',' || EMP.LAST_NAME || ',' || EMP.SALARY);
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
