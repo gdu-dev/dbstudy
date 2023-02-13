@@ -295,6 +295,51 @@ BEGIN
 END;
 
 
+/*
+    FOR 구문
+    
+    FOR 변수 IN 시작..종료 LOOP
+        실행문
+    END LOOP;
+*/
+-- 1 ~ 5 출력하기
+DECLARE
+    N NUMBER(1);
+BEGIN
+    FOR N IN 1..5 LOOP
+        DBMS_OUTPUT.PUT_LINE(N);
+    END LOOP;
+END;
+
+-- 1 ~ 10 사이 정수를 '짝수', '홀수', '3의배수'로 출력하시오.
+DECLARE
+    N NUMBER(2);
+    MODULAR NUMBER(1);  -- 나머지 값
+    MESSAGE VARCHAR2(10 BYTE);
+BEGIN
+    FOR N IN 1..10 LOOP
+        SELECT MOD(N, 3)
+          INTO MODULAR
+          FROM DUAL;
+        IF MODULAR = 0 THEN
+            MESSAGE := '3의배수';
+        ELSE
+            SELECT MOD(N, 2)
+              INTO MODULAR
+              FROM DUAL;
+            IF MODULAR = 1 THEN
+                MESSAGE := '홀수';
+            ELSE
+                MESSAGE := '짝수';
+            END IF;
+        END IF;
+        DBMS_OUTPUT.PUT_LINE(N || '은(는) ' || MESSAGE || '입니다.');
+    END LOOP;
+END;
+
+
+
+
 
 
 
