@@ -153,11 +153,43 @@ END;
 
 
 -- EMPLOYEE_ID가 150인 사원의 SALARY가 15000 이상이면 '고액연봉', 아니면 '보통연봉'을 출력하시오.
-
+DECLARE
+    EMP_ID EMPLOYEES.EMPLOYEE_ID%TYPE;
+    SAL EMPLOYEES.SALARY%TYPE;
+    MESSAGE VARCHAR2(20 BYTE);
+BEGIN
+    EMP_ID := 150;
+    SELECT SALARY
+      INTO SAL
+      FROM EMPLOYEES
+     WHERE EMPLOYEE_ID = EMP_ID;
+    IF SAL >= 15000 THEN
+        MESSAGE := '고액연봉';
+    ELSE
+        MESSAGE := '보통연봉';
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('사원번호 ' || EMP_ID || '인 사원의 연봉은 ' || SAL || '이고 ' || MESSAGE || '입니다.');
+END;
 
 -- EMPLOYEE_ID가 150인 사원의 COMMISSION_PCT가 0이면 '커미션없음', 아니면 실제 커미션(COMMISSION_PCT * SALARY)을 출력하시오.
-
-
+DECLARE
+    EMP_ID EMPLOYEES.EMPLOYEE_ID%TYPE;
+    COMM_PCT EMPLOYEES.COMMISSION_PCT%TYPE;
+    SAL EMPLOYEES.SALARY%TYPE;
+    MESSAGE VARCHAR2(20 BYTE);
+BEGIN
+    EMP_ID := 150;
+    SELECT NVL(COMMISSION_PCT, 0), SALARY
+      INTO COMM_PCT, SAL
+      FROM EMPLOYEES
+     WHERE EMPLOYEE_ID = EMP_ID;
+    IF COMM_PCT = 0 THEN
+        MESSAGE := '커미션없음';
+    ELSE
+        MESSAGE := TO_CHAR(COMM_PCT * SAL);
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('사원번호 ' || EMP_ID || '인 사원의 커미션은 ' || MESSAGE || '입니다.');
+END;
 
 
 
