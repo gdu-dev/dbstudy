@@ -192,6 +192,110 @@ BEGIN
 END;
 
 
+/*
+    CASE 구문
+    
+    CASE
+        WHEN 조건식 THEN
+            실행문
+        WHEN 조건식 THEN
+            실행문
+        ELSE
+            실행문
+    END CASE;
+*/
+
+-- EMPLOYEE_ID가 150인 사원의 PHONE_NUMBER에 따른 지역을 출력하시오.
+-- 011 : MOBILE
+-- 515 : EAST
+-- 590 : WEST
+-- 603 : SOUTH
+-- 650 : NORTH
+DECLARE
+    EMP_ID EMPLOYEES.EMPLOYEE_ID%TYPE;
+    PHONE CHAR(3 BYTE);
+    MESSAGE VARCHAR2(6 BYTE);
+BEGIN
+    EMP_ID := 150;
+    SELECT SUBSTR(PHONE_NUMBER, 1, 3)
+      INTO PHONE
+      FROM EMPLOYEES
+     WHERE EMPLOYEE_ID = EMP_ID;
+    CASE
+        WHEN PHONE = '011' THEN
+            MESSAGE := 'MOBILE';
+        WHEN PHONE = '515' THEN
+            MESSAGE := 'EAST';
+        WHEN PHONE = '590' THEN
+            MESSAGE := 'WEST';
+        WHEN PHONE = '603' THEN
+            MESSAGE := 'SOUTH';
+        WHEN PHONE = '650' THEN
+            MESSAGE := 'NORTH';
+    END CASE;
+    DBMS_OUTPUT.PUT_LINE(PHONE || ',' || MESSAGE);
+END;
+
+
+/*
+    WHILE 구문
+    
+    WHILE 조건식 LOOP
+        실행문
+    END LOOP;
+*/
+
+-- 1 ~ 5 출력하기
+DECLARE
+    N NUMBER(1);
+BEGIN
+    N := 1;
+    WHILE N <= 5 LOOP
+        DBMS_OUTPUT.PUT_LINE(N);
+        N := N + 1;
+    END LOOP;
+END;
+
+-- 사원번호가 100 ~ 206인 사원들의 FIRST_NAME, LAST_NAME을 조회하시오.
+DECLARE
+    EMP_ID EMPLOYEES.EMPLOYEE_ID%TYPE;
+    FNAME EMPLOYEES.FIRST_NAME%TYPE;
+    LNAME EMPLOYEES.LAST_NAME%TYPE;
+BEGIN
+    EMP_ID := 100;
+    WHILE EMP_ID <= 206 LOOP
+        SELECT FIRST_NAME, LAST_NAME
+          INTO FNAME, LNAME
+          FROM EMPLOYEES
+         WHERE EMPLOYEE_ID = EMP_ID;
+        DBMS_OUTPUT.PUT_LINE(FNAME || ' ' || LNAME);
+        EMP_ID := EMP_ID + 1;
+    END LOOP;
+END;
+
+-- 사원번호가 100 ~ 206인 사원들의 FIRST_NAME, LAST_NAME을 조회하시오.
+-- FIRST_NAME과 LAST_NAME을 저장할 수 있는 레코드 변수를 활용하시오.
+DECLARE
+    EMP_ID EMPLOYEES.EMPLOYEE_ID%TYPE;
+    TYPE NAME_TYPE IS RECORD(
+        FNAME EMPLOYEES.FIRST_NAME%TYPE,
+        LNAME EMPLOYEES.LAST_NAME%TYPE
+    );
+    FULL_NAME NAME_TYPE;
+BEGIN
+    EMP_ID := 100;
+    WHILE EMP_ID <= 206 LOOP
+        SELECT FIRST_NAME, LAST_NAME
+          INTO FULL_NAME
+          FROM EMPLOYEES
+         WHERE EMPLOYEE_ID = EMP_ID;
+        DBMS_OUTPUT.PUT_LINE(FULL_NAME.FNAME || ' ' || FULL_NAME.LNAME);
+        EMP_ID := EMP_ID + 1;
+    END LOOP;
+END;
+
+
+
 
 
 
