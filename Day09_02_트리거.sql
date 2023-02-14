@@ -62,3 +62,60 @@ DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = 99;
 
 -- TRIG2 삭제
 DROP TRIGGER TRIG2;
+
+/*
+    OLD 테이블
+    1. INSERT, UPDATE, DELETE 수행 이전의 정보를 임시 저장하고 있는 테이블이다.
+    2. :OLD 방식으로 호출한다.
+    3. AFTER 트리거와 함께 사용한다.
+        1) AFTER INSERT : NULL
+        2) AFTER UPDATE : UPDATE 이전 데이터(수정되기 전의 데이터)
+        3) AFTER DELETE : DELETE 이전 데이터(삭제되기 전의 데이터)
+*/
+
+-- TRIG3 정의
+CREATE OR REPLACE TRIGGER TRIG3
+    AFTER
+    UPDATE OR DELETE
+    ON EMPLOYEES
+    FOR EACH ROW
+BEGIN
+    IF UPDATING THEN
+        DBMS_OUTPUT.PUT_LINE('수정 전 LAST_NAME : ' || :OLD.LAST_NAME);
+    ELSIF DELETING THEN
+        DBMS_OUTPUT.PUT_LINE('삭제 전 LAST_NAME : ' || :OLD.LAST_NAME);
+    END IF;
+END;
+
+-- TRIG3 동작 확인
+UPDATE EMPLOYEES SET LAST_NAME = 'Kim' WHERE EMPLOYEE_ID = 100;
+DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = 100;
+
+-- TRIG3 삭제
+DROP TRIGGER TRIG3;
+
+
+
+/*
+    트리거 실습
+    사원 테이블에서 삭제할 사원정보를 퇴사자 테이블로 삽입하는 RETIRE_TRIG 생성하기
+    
+    작업 순서
+    1. 사원(EMPLOYEES) 테이블의 구조를 복사하여 퇴사자(RETIRES) 테이블을 생성한다.
+    2. 퇴사자(RETIRES) 테이블에 퇴사번호(RETIRE_ID), 퇴사일자(RETIRE_DATE) 칼럼을 추가한다.
+    3. 퇴사번호(RETIRE_ID) 칼럼을 기본키로 지정한다.
+    4. 퇴사번호를 생성할 RETIRE_SEQ 시퀀스를 생성한다.
+    5. RETIRE_TRIG 트리거를 생성한다.
+        1) AFTER DELETE 트리거
+        2) OLD 테이블의 데이터를 모두 퇴사자 테이블로 삽입한다.
+        3) 퇴사번호는 시퀀스, 퇴사일자는 SYSDATE로 처리해서 삽입한다.
+*/
+
+
+
+
+
+
+
+
+
