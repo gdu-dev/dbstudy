@@ -108,14 +108,19 @@ SELECT
 
 
 
+-- 함수 MY_FLOOR 정의
+CREATE OR REPLACE FUNCTION MY_FLOOR(N NUMBER, DIGIT NUMBER)
+RETURN NUMBER
+IS
+BEGIN
+    RETURN FLOOR(N * POWER(10, DIGIT)) / POWER(10, DIGIT);
+END;
 
-
-
-
-
-
-
-
-
-
-
+-- 함수 MY_FLOOR 호출
+SELECT
+       MY_FLOOR(9999.999, 2)   -- 소수2자리 내림
+     , MY_FLOOR(9999.999, 1)   -- 소수1자리 내림
+     , MY_FLOOR(9999.999, 0)   -- 정수로 내림
+     , MY_FLOOR(9999.999, -1)  -- 일의자리 내림
+     , MY_FLOOR(9999.999, -2)  -- 십의자리 내림
+  FROM DUAL;
