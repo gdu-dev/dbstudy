@@ -25,6 +25,40 @@ BEGIN
     RETURN 'Hello World';
 END;
 
-
 -- 사용자 함수 FUNC1 호출
 SELECT FUNC1() FROM DUAL;
+
+
+
+-- 사용자 함수 FUNC2 정의
+-- 사원번호를 전달하면 해당 사원의 FULL_NAME(Steven King)을 반환하는 함수
+
+-- 사용자 함수의 파라미터는 IN/OUT 표기가 없다.
+-- 입력 파라미터 형식으로 사용된다.
+
+CREATE OR REPLACE FUNCTION FUNC2(EMP_ID EMPLOYEES.EMPLOYEE_ID%TYPE)
+RETURN VARCHAR2
+IS
+    FNAME EMPLOYEES.FIRST_NAME%TYPE;
+BEGIN
+
+    SELECT FIRST_NAME
+      INTO FNAME
+      FROM EMPLOYEES
+     WHERE EMPLOYEE_ID = EMP_ID;
+
+    RETURN FNAME;
+
+END;
+
+-- 사용자 함수 FUNC2 호출
+SELECT FUNC2(100), LAST_NAME
+  FROM EMPLOYEES
+ WHERE EMPLOYEE_ID = 100;
+
+
+
+
+
+
+
