@@ -41,19 +41,45 @@ CREATE TABLE CUSTOMER_T (
 */
 
 -- 1. BANK_T에 연락처(BANK_TEL) 칼럼을 추가하시오.
+ALTER TABLE BANK_T ADD BANK_TEL VARCHAR2(15 BYTE);
 
 -- 2. BANK_T의 은행명(BANK_NAME) 칼럼을 VARCHAR2(15 BYTE)로 바꾸고 필수 제약조건을 지정하시오.
+ALTER TABLE BANK_T MODIFY BANK_NAME VARCHAR2(15 BYTE) NOT NULL;
 
 -- 3. CUSTOMER_T의 나이(CUST_AGE) 칼럼을 삭제하시오.
+ALTER TABLE CUSTOMER_T DROP COLUMN CUST_AGE;
 
 -- 4. CUSTOMER_T의 연락처(CUST_PHONE) 칼럼명을 CUST_TEL로 수정하시오.
+ALTER TABLE CUSTOMER_T RENAME COLUMN CUST_PHONE TO CUST_TEL;
 
 -- 5. CUSTOMER_T에 등급(GRADE) 칼럼을 추가하시오. 'VIP', 'GOLD', 'SILVER', 'BRONZE' 중 하나의 값을 가지도록 설정하시오.
+ALTER TABLE CUSTOMER_T ADD GRADE VARCHAR2(6 BYTE) CHECK(GRADE = 'VIP' OR GRADE = 'GOLD' OR GRADE = 'SILVER' OR GRADE = 'BRONZE');
+                                               -- CHECK(GRADE IN('VIP', 'GOLD', 'SILVER', 'BRONZE'));
 
 -- 6. CUSTOMER_T의 고객명(CUST_NAME) 칼럼의 필수 제약조건을 없애시오.
+ALTER TABLE CUSTOMER_T MODIFY CUST_NAME VARCHAR2(30 BYTE) NULL;
 
 -- 7. CUSTOMER_T의 테이블명을 CUST_T로 수정하시오.
+ALTER TABLE CUSTOMER_T RENAME TO CUST_T;
 
 
+/*
+    테이블 수정하기 - PK/FK 제약조건
+    
+    1. PK
+        1) 추가 : ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 PRIMARY KEY(칼럼명)
+        2) 삭제
+            (1) ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
+            (2) ALTER TABLE 테이블명 DROP PRIMARY KEY
+    2. FK
+        1) 추가     : ALTER TABLE 자식테이블명 ADD     CONSTRAINT 제약조건명 FOREIGN KEY(칼럼명) REFERENCES 부모테이블명(참조할칼럼명) [옵션]
+        2) 삭제     : ALTER TABLE 테이블명     DROP    CONSTRAINT 제약조건명
+        3) 비활성화 : ALTER TABLE 테이블명     DISABLE CONSTRAINT 제약조건명
+        4) 활성화   : ALTER TABLE 테이블명     ENABLE  CONSTRAINT 제약조건명
+*/
 
+-- FK_CUSTOMER_BANK 제약조건을 비활성화하시오.
+ALTER TABLE CUST_T DISABLE CONSTRAINT FK_CUSTOMER_BANK;
 
+-- FK_CUSTOMER_BANK 제약조건을 활성화하시오.
+ALTER TABLE CUST_T ENABLE CONSTRAINT FK_CUSTOMER_BANK;
