@@ -59,8 +59,3 @@ SELECT LTRIM('   HELLO   WORLD   ')
      , RTRIM('   HELLO   WORLD   ')
      ,  TRIM('   HELLO   WORLD   ')
   FROM DUAL;
-
-
-
-
-
