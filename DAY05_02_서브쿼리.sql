@@ -42,6 +42,6 @@ SELECT *
 -- 1. 부서가 '영업부'인 사원을 조회하시오.
 SELECT *
   FROM EMPLOYEE_T
- WHERE DEPART = (SELECT DEPT_NO
+ WHERE DEPART IN(SELECT DEPT_NO
                    FROM DEPARTMENT_T
                   WHERE DEPT_NAME = '영업부');
