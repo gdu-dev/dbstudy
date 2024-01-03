@@ -137,3 +137,49 @@ SELECT DEPARTMENT_ID
           FROM EMPLOYEES E
          WHERE D.DEPARTMENT_ID = E.DEPARTMENT_ID) AS 사원수
   FROM DEPARTMENTS D;
+
+
+-- GD 계정으로 접속
+/*
+    CREATE 문과 서브 쿼리
+    1. 서브 쿼리 결과를 새로운 테이블로 만들 수 있다.
+    2. 테이블을 복사하는 용도로도 사용할 수 있다.
+    3. 형식
+        CREATE TABLE 테이블명 (칼럼1, 칼럼2, ...)
+        AS (SELECT 칼럼1, 칼럼2, ...)
+*/
+-- 1. 사원번호, 사원명, 급여, 부서번호를 조회하고 결과를 새 테이블로 생성하시오.
+CREATE TABLE EMPLOYEE_T2 (EMP_NO, NAME, SALARY, DEPART)
+AS (SELECT EMP_NO, NAME, SALARY, DEPART
+      FROM EMPLOYEE_T);
+
+-- 2. 부서 테이블의 구조만 복사하여 새 테이블을 생성하시오.
+CREATE TABLE DEPARTMENT_T2 (DEPT_NO, DEPT_NAME, LOCATION)
+AS (SELECT DEPT_NO, DEPT_NAME, LOCATION
+      FROM DEPARTMENT_T
+     WHERE 1 = 2);
+
+/*
+    INSERT 문과 서브 쿼리
+    1. 서브 쿼리의 결과를 INSERT 할 수 있다.
+    2. 한 번에 여러 행을 INSERT 할 수 있다.
+    3. 형식
+        INSERT INTO 테이블명(칼럼1, 칼럼2, ...) (SELECT 칼럼1, 칼럼2, ...)
+*/
+-- 1. 지역이 '대구'인 부서 정보를 DEPARTMENT_T2 테이블에 삽입하시오.
+INSERT INTO DEPARTMENT_T2(DEPT_NO, DEPT_NAME, LOCATION)
+(SELECT DEPT_NO, DEPT_NAME, LOCATION
+   FROM DEPARTMENT_T
+  WHERE LOCATION = '대구');
+COMMIT;
+
+-- 2. 직급이 '과장'인 사원 정보를 '과장명단' 테이블로 생성하시오.
+CREATE TABLE 과장명단 (EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY)
+AS (SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
+      FROM EMPLOYEE_T
+     WHERE 1 = 2);
+INSERT INTO 과장명단 (EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY)
+(SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
+   FROM EMPLOYEE_T
+  WHERE POSITION = '과장');
+COMMIT;
